@@ -234,11 +234,46 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
 .node:not(:last-child):after{content:"↓";position:absolute;bottom:-20px;left:50%;color:var(--gold);z-index:2}
 .bigline{margin-top:34px;font-size:clamp(22px,2.35vw,38px);font-weight:800;max-width:930px}
 .workflow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:34px;align-items:stretch}
-.step{min-height:168px;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--panel);display:flex;flex-direction:column;justify-content:space-between}
-.step .n{font-size:12px;color:var(--gold);letter-spacing:.14em}
-.step strong{font-size:clamp(17px,1.55vw,24px);line-height:1.15}
-.step span{font-size:13px;color:var(--muted);line-height:1.35}
-.step.focus{border-color:rgba(245,181,27,.55);box-shadow:0 0 0 1px rgba(245,181,27,.12) inset}
+.step{
+  min-height:190px;
+  padding:20px;
+
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:var(--panel);
+
+  display:grid;
+  grid-template-rows:
+    20px      /* number */
+    58px      /* heading - same height for every card */
+    auto;     /* description */
+
+  row-gap:12px;
+  align-content:start;
+}
+
+.step .n{
+  font-size:14px;
+  color:var(--gold);
+  letter-spacing:.14em;
+  font-weight:800;
+}
+
+.step strong{
+  font-size:clamp(20px,1.65vw,27px);
+  line-height:1.15;
+  font-weight:800;
+
+  display:flex;
+  align-items:center;
+}
+
+.step span{
+  font-size:clamp(16px,1.15vw,19px);
+  line-height:1.45;
+  color:var(--muted);
+  align-self:start;
+}
 .demo-btn{
   margin-top:26px;display:inline-flex;align-items:center;gap:12px;padding:15px 19px;border-radius:12px;
   border:1px solid rgba(245,181,27,.55);background:var(--gold);color:#111;font-weight:800;cursor:pointer
@@ -255,7 +290,15 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
 .card .num{font-size:13px;color:var(--gold);letter-spacing:.14em;margin-bottom:40px}
 .card h3{font-size:clamp(25px,2.2vw,38px);margin:0 0 14px}
 .card p{color:#b7bdc3;font-size:clamp(15px,1.25vw,19px);line-height:1.45;margin:0}
-.deliver{margin-top:20px;padding:16px 20px;border-top:1px solid var(--line);color:#d9dde1;font-size:clamp(14px,1.2vw,18px)}
+.deliver{
+  color:#44576a;
+  border-top:1px solid rgba(0,43,73,.18);
+}
+
+.deliver b{
+  color:#002B49;
+  font-weight:800;
+}
 .partner-top{padding:24px 28px;border:1px solid rgba(245,181,27,.38);border-radius:18px;background:linear-gradient(110deg,rgba(245,181,27,.08),rgba(255,255,255,.02));margin:28px 0 20px}
 .partner-top .tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
 .tag{padding:8px 11px;border:1px solid var(--line);border-radius:999px;color:#c8cdd2;font-size:13px}
@@ -271,7 +314,10 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
 .controls{display:flex;gap:8px}
 .ctrl{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(17,21,26,.82);color:white;cursor:pointer;font-size:18px}
 .hint{font-size:12px;color:#777f87;margin-left:10px}
-
+.cta{
+  font-size:clamp(28px,2.7vw,44px);
+  margin-top:26px;
+}
 .slide > div{
   width:100%;
   max-width:1500px;
@@ -465,7 +511,310 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
   }
 
 }
+/* ============================
+   LIGHT PARTNER-PITCH THEME
+   ============================ */
 
+:root{
+  --bg:#f5f6f8;
+  --panel:#ffffff;
+  --panel2:#ffffff;
+  --text:#152536;
+  --muted:#5f6e7c;
+
+  /* stronger, obvious navy */
+  --gold:#002B49;
+
+  --line:rgba(0,43,73,.18);
+  --good:#002B49;
+}
+/* =========================================
+   STRONGER NAVY EMPHASIS
+   ========================================= */
+
+.gold,
+.kicker,
+.section-label,
+.step .n,
+.card .num,
+.col h3,
+.team-info .team-role,
+.investment-amount,
+.output-label{
+  color:#002B49;
+  font-weight:800;
+}
+
+/* Bold text within content */
+b,
+strong{
+  color:#002B49;
+  font-weight:800;
+}
+
+/* Main card headings */
+.step strong,
+.card h3,
+.investment-card h3{
+  color:#002B49;
+  font-weight:800;
+}
+
+/* Make highlighted headline words particularly obvious */
+h1 .gold,
+h2 .gold,
+.cta .gold{
+  color:#002B49;
+  font-weight:900;
+}
+html,
+body{
+  background:var(--bg);
+  color:var(--text);
+}
+
+.topbar{
+  background:linear-gradient(
+    180deg,
+    rgba(245,246,248,.98),
+    rgba(245,246,248,.85),
+    transparent
+  );
+}
+
+.brand{
+  color:#12375b;
+}
+
+.lead,
+.solution-intro{
+  color:#566575;
+}
+
+.step{
+  background:#ffffff;
+  border-color:rgba(18,55,91,.15);
+  box-shadow:0 6px 20px rgba(16,36,62,.04);
+}
+
+.node{
+  background:#ffffff;
+  border-color:rgba(18,55,91,.15);
+}
+
+.card{
+  background:#ffffff;
+  border-color:rgba(18,55,91,.15);
+  box-shadow:0 6px 20px rgba(16,36,62,.04);
+}
+
+.card p{
+  color:#586777;
+}
+
+.col{
+  background:#ffffff;
+  border-color:rgba(18,55,91,.15);
+}
+
+.partner-top{
+  background:rgba(18,55,91,.045);
+  border-color:rgba(18,55,91,.24);
+}
+
+.partner-top div{
+  color:#566575 !important;
+}
+
+.investment-card{
+  background:#ffffff;
+  border-color:rgba(18,55,91,.15);
+}
+
+.investment-card p{
+  color:#586777;
+  opacity:1;
+}
+
+.step.focus{
+  border-color:#12375b;
+  box-shadow:0 0 0 2px rgba(18,55,91,.08) inset;
+}
+
+.demo-btn{
+  background:#12375b;
+  border-color:#12375b;
+  color:#ffffff;
+}
+
+.demo-btn.secondary{
+  background:transparent;
+  color:#12375b;
+}
+
+.dot{
+  background:#c7ced6;
+}
+
+.dot.active{
+  background:#12375b;
+}
+
+.ctrl{
+  background:#ffffff;
+  color:#12375b;
+  border-color:rgba(18,55,91,.18);
+}
+
+.team-info span{
+  color:#667483;
+}
+/* =========================================
+   TYPOGRAPHY — PITCH READABILITY
+   ========================================= */
+
+/* Main explanatory paragraphs */
+.lead{
+  font-size:clamp(20px,1.9vw,30px);
+  line-height:1.45;
+}
+
+/* Workflow card headings */
+.step strong{
+  font-size:clamp(19px,1.7vw,26px);
+  line-height:1.2;
+}
+
+/* Workflow card descriptions — IMPORTANT */
+.step span{
+  font-size:clamp(15px,1.15vw,18px);
+  line-height:1.45;
+}
+
+/* Validation / POC card headings */
+.card h3{
+  font-size:clamp(27px,2.3vw,40px);
+}
+
+/* Validation / POC card descriptions */
+.card p{
+  font-size:clamp(17px,1.4vw,21px);
+  line-height:1.5;
+}
+
+/* Partnership box text */
+.item{
+  font-size:clamp(17px,1.4vw,21px);
+  line-height:1.4;
+}
+
+/* Small section headings */
+.section-label{
+  font-size:14px;
+}
+
+/* Card numbering / labels */
+.step .n,
+.card .num{
+  font-size:14px;
+}
+
+/* Investment cards */
+.investment-card h3{
+  font-size:1.4rem;
+}
+
+.investment-card p{
+  font-size:17px;
+  line-height:1.55;
+}
+
+/* =========================================
+   TEAM SECTION — LARGER FOR PRESENTATION
+   ========================================= */
+
+.team-section{
+  margin-top:26px;
+  padding-top:24px;
+  border-top:1px solid var(--line);
+}
+
+.team-label{
+  color:var(--gold);
+  font-size:15px;
+  letter-spacing:.16em;
+  font-weight:850;
+  margin-bottom:20px;
+}
+
+.team-row{
+  display:grid;
+  grid-template-columns:1fr 1fr 1.35fr;
+  gap:34px;
+  align-items:center;
+}
+
+.team-member{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.team-member img{
+  width:82px;
+  height:82px;
+  border-radius:50%;
+  object-fit:cover;
+  flex-shrink:0;
+}
+
+.team-info{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.team-info strong{
+  font-size:20px;
+  line-height:1.15;
+}
+
+.team-info span{
+  font-size:14px;
+  line-height:1.35;
+}
+
+.team-info .team-role{
+  color:var(--gold);
+  font-size:14px;
+  font-weight:800;
+}
+
+.team-logos{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:28px;
+}
+
+.cods-logo{
+  width:300px;
+  max-height:78px;
+}
+
+.curtin-logo{
+  width:190px;
+  max-height:64px;
+}
+.cods-logo{
+  width:330px;
+  max-height:82px;
+}
+
+.curtin-logo{
+  width:210px;
+  max-height:68px;
+}
 </style>
 </head>
 <body>
@@ -475,18 +824,48 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
     <!-- <div class="mode"><span class="pill active">PITCH MODE</span><span class="pill">HUMAN-IN-THE-LOOP</span></div> -->
   </div>
 
-  <section class="slide active" data-i="0">
+  <!-- SCREEN 00 — INTRODUCTION -->
+<section class="slide active" data-i="0">
+  <div>
+
+    <div class="kicker">00 — PLANNING & SCHEDULING IN MINING</div>
+
+    <h2>
+      Planning and scheduling keep
+      <span class="gold">operations moving continuously.</span>
+    </h2>
+
+    <p class="lead">
+      Planning and scheduling align activities, resources and material movements over time so that the operation can work as one connected system.
+    </p>
+
+    <div class="partner-top" style="margin-top:30px">
+      <div style="
+        font-size:clamp(22px,2vw,32px);
+        font-weight:800;
+        color:#152536 !important;
+        line-height:1.3;
+      ">
+        But in reality,
+        <span class="gold">operations rarely go exactly to plan.</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  <section class="slide" data-i="1">
     <div>
-      <div class="kicker">01 — The problem & why it matters</div>
+      <div class="kicker">01 — DISRUPTION & why it matters</div>
       <h2>A vessel is <span class="gold">delayed.</span><br>The whole <span class="gold">plan</span> needs to <span class="gold">change.</span></h2>
-      <p class="lead">The scheduler often has only minutes to recover a workable plan across berth availability, vessel line-up, stockpiles, reclaiming or transfer equipment, and throughput targets.</p>
+      <p class="lead">The scheduler often has only minutes to recover a workable plan across several interdependencies.</p>
       <div class="section-label">FEASIBLE SCHEDULE INTERDEPENDENCIES</div>
       <div class="workflow workflow-five" style="margin-top:28px">
-        <div class="step"><div class="n">01</div><strong>Berth</strong><span>Can the revised vessel line-up still work?</span></div>
+        <div class="step"><div class="n">01</div><strong>Berth</strong><span>Can the revised vessel sequences still work?</span></div>
         <div class="step"><div class="n">02</div><strong>Stockpile</strong><span>Will the required material actually be ready?</span></div>
-        <div class="step"><div class="n">03</div><strong>Equipment</strong><span>Are reclaiming or transfer resources available?</span></div>
-        <div class="step"><div class="n">04</div><strong>Material flow</strong><span>Can product reach the vessel when required?</span></div>
-        <div class="step"><div class="n">05</div><strong>Downstream</strong><span>Does the recovery create another conflict or congestion?</span></div>
+        <div class="step"><div class="n">03</div><strong>Equipment</strong><span>Are reclaimers or trucks available?</span></div>
+        <div class="step"><div class="n">04</div><strong>Material flow</strong><span>Can we lock the vessel in time?</span></div>
+        <div class="step"><div class="n">05</div><strong>Consequences</strong><span>Does the recovery create another conflict or congestion?</span></div>
       </div>
       <div class="partner-top" style="margin-top:20px">
         <b style="color:var(--gold)">WHY THIS MATTERS</b>
@@ -496,11 +875,11 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
     </div>
   </section>
 
-  <section class="slide" data-i="1">
+  <section class="slide" data-i="2">
     <div>
       <div class="kicker">02 — PortOptimiser</div>
       <!-- <h2>Turn operational context into <span class="gold">optimal recovery options.</span></h2> -->
-      <p class="solution-intro">That's what we're developing with PortOptimiser.</p>
+      <!-- <p class="solution-intro">That's what we're developing with PortOptimiser.</p> -->
       <h2>
         Help schedulers <span class="gold">recover schedules quickly</span> after disruptions.
         <!-- <span class="gold">optimal recovery options.</span> -->
@@ -514,8 +893,8 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
         <strong>Disruption: Vessel delay</strong>
         <span>A vessel arrives later than planned, triggering schedule recovery.</span>
       </div>
-        <div class="step"><div class="n">02</div><strong>Operational context</strong><span>Operational data + scheduler and SME knowledge.</span></div>
-        <div class="step focus"><div class="n">03</div><strong>PortOptimiser</strong><span>Capture context with an LLM → structure inputs → optimise recovery.</span></div>
+        <div class="step"><div class="n">02</div><strong>Operational context</strong><span>Operational data and SME knowledge.</span></div>
+        <div class="step focus"><div class="n">03</div><strong>PortOptimiser</strong><span>Capture context → structure inputs → optimise recovery.</span></div>
         <div class="step"><div class="n">04</div><strong>Recovery options</strong><span>Optimal alternatives compared across agreed KPIs.</span></div>
         <div class="step"><div class="n">05</div><strong>Scheduler decides</strong><span>Review the alternatives and select the preferred recovery plan.</span></div>
       </div>
@@ -524,10 +903,10 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
     </div>
   </section>
 
-  <section class="slide" data-i="2">
+  <section class="slide" data-i="3">
     <div>
       <div class="kicker">03 — The proof-of-concept</div>
-      <h2>Realistic vessel-delay disruption. <br><span class="gold">Partner terminal layout.</span></h2>
+      <h2>Realistic vessel-delay disruption. <br><span class="gold">Partner specific operation.</span></h2>
       <p class="lead" style="margin-top:16px">Together with a partner, the POC will test whether PortOptimiser is realistic, fast enough for time-critical decisions, and operationally valuable compared with current practice.</p>
       <div class="section-label">Validation criteria</div>
       
@@ -535,13 +914,13 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
   <div class="card">
     <div class="num">01 — REALISTIC</div>
     <h3>Fit the operation</h3>
-    <p>Use the terminal's real berths, stockpiles, equipment, material flows, and operating rules.</p>
+    <p>Reflect site-specific operations.</p>
   </div>
 
   <div class="card">
     <div class="num">02 — FAST</div>
     <h3>Support quick decisions</h3>
-    <p>Generate useful recovery options within the scheduler's decision window.</p>
+    <p>Generate optimal recovery options in time to support the scheduler's decision.</p>
   </div>
 
   <div class="card">
@@ -554,7 +933,7 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
     </div>
   </section>
 
-<section class="slide" data-i="3">
+<section class="slide" data-i="4">
   <div>
     <div class="kicker">04 — PARTNERSHIP</div>
 
@@ -623,7 +1002,7 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
 </section>
 
 <!-- SCREEN 5 — $20K INVESTMENT -->
-<section class="slide" data-i="4">
+<section class="slide" data-i="5">
   <div class="slide-inner investment-slide">
 
     <div class="kicker">05 — INDUSTRY INVESTMENT</div>
@@ -693,6 +1072,7 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
     <span class="dot"></span>
     <span class="dot"></span>
     <span class="dot"></span>
+    <span class="dot"></span>
     <span class="dot"></span>  
     </div>
     <div class="controls"><span class="hint"></span><button class="ctrl" id="prev">←</button><button class="ctrl" id="next">→</button></div>
@@ -711,7 +1091,7 @@ document.getElementById('next').onclick=()=>show(i+1);
 const shell=document.getElementById('demoShell');
 document.getElementById('openDemo').onclick=()=>shell.classList.add('active');
 document.getElementById('closeDemo').onclick=()=>shell.classList.remove('active');
-document.getElementById('continuePitch').onclick=()=>{shell.classList.remove('active');show(2)};
+document.getElementById('continuePitch').onclick=()=>{shell.classList.remove('active');show(3)};
 document.addEventListener('keydown',e=>{
   if(shell.classList.contains('active')){
     if(e.key==='Escape') shell.classList.remove('active');
