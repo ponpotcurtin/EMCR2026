@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PortOptimiser — Pitch Mode</title>
 <style>
+.workflow-five{
+  grid-template-columns:repeat(5,1fr);
+}
 .team-section{
   margin-top:28px;
   padding-top:22px;
@@ -143,7 +146,7 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
   border:1px solid rgba(245,181,27,.55);background:var(--gold);color:#111;font-weight:800;cursor:pointer
 }
 .demo-btn.secondary{background:transparent;color:var(--gold)}
-.demo-shell{display:none;position:absolute;inset:72px 0 0;background:#050607;z-index:15}
+.demo-shell{display:none;position:fixed;inset:72px 0 0;background:#050607;z-index:15}
 .demo-shell.active{display:block}
 .demo-head{height:54px;padding:0 4vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:#0b0d10}
 .demo-frame{width:100%;height:calc(100% - 54px);border:0;background:white}
@@ -170,10 +173,201 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
 .controls{display:flex;gap:8px}
 .ctrl{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(17,21,26,.82);color:white;cursor:pointer;font-size:18px}
 .hint{font-size:12px;color:#777f87;margin-left:10px}
-@media(max-width:900px){
-  .problem-grid,.cols{grid-template-columns:1fr}.chain{display:none}.workflow{grid-template-columns:1fr 1fr}.step{min-height:130px}
-  .cards3{grid-template-columns:1fr}.card{min-height:auto}.slide{overflow:auto;padding-top:100px;padding-bottom:100px}.topbar{height:64px}
+
+.slide > div{
+  width:100%;
+  max-width:1500px;
+  margin:0 auto;
 }
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+/* Medium screens / smaller laptops */
+@media(max-width:1100px){
+
+  .workflow,
+  .workflow-five{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .cards3{
+    gap:14px;
+  }
+
+  .cols{
+    gap:14px;
+  }
+
+  .team-row{
+    gap:18px;
+  }
+
+}
+
+
+/* Tablets */
+@media(max-width:900px){
+
+  html,
+  body{
+    overflow:auto;
+  }
+
+  #app{
+    min-height:100dvh;
+    height:auto;
+  }
+
+  .slide{
+    position:relative;
+    min-height:100dvh;
+    overflow:visible;
+    padding:90px 28px 100px;
+  }
+
+  .slide:not(.active){
+    display:none;
+  }
+
+  .slide.active{
+    opacity:1;
+    transform:none;
+  }
+
+  .problem-grid,
+  .cols{
+    grid-template-columns:1fr;
+  }
+
+  .chain{
+    display:none;
+  }
+
+  .workflow{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .workflow-five{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .cards3{
+    grid-template-columns:1fr;
+  }
+
+  .card,
+  .step{
+    min-height:auto;
+  }
+
+  .team-row{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .team-logos{
+    grid-column:1 / -1;
+    justify-content:flex-start;
+  }
+
+  .topbar{
+    height:64px;
+  }
+}
+
+
+/* Phones */
+@media(max-width:600px){
+  .demo-shell{
+  inset:56px 0 0;
+}
+  .topbar{
+    height:56px;
+    padding:0 18px;
+  }
+
+  .brand{
+    font-size:9px;
+    letter-spacing:.08em;
+  }
+
+  .slide{
+    padding:78px 18px 90px;
+  }
+
+  h1{
+    font-size:clamp(34px,11vw,52px);
+    line-height:1;
+  }
+
+  h2{
+    font-size:clamp(30px,9vw,46px);
+    line-height:1.03;
+  }
+
+  .lead{
+    font-size:17px;
+    line-height:1.45;
+  }
+
+  .workflow,
+  .workflow-five{
+    grid-template-columns:1fr;
+  }
+
+  .cards3,
+  .cols{
+    grid-template-columns:1fr;
+  }
+
+  .step,
+  .card,
+  .col{
+    padding:18px;
+  }
+
+  .team-row{
+    grid-template-columns:1fr;
+  }
+
+  .team-member{
+    align-items:center;
+  }
+
+  .team-member img{
+    width:64px;
+    height:64px;
+  }
+
+  .team-logos{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:14px;
+  }
+
+  .cods-logo{
+    width:min(260px,100%);
+  }
+
+  .curtin-logo{
+    width:min(180px,100%);
+  }
+
+  .cta{
+    font-size:26px;
+    line-height:1.1;
+  }
+
+  .nav{
+    left:18px;
+    right:18px;
+    bottom:14px;
+  }
+
+}
+
 </style>
 </head>
 <body>
@@ -186,10 +380,10 @@ h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:
   <section class="slide active" data-i="0">
     <div>
       <div class="kicker">01 — The problem & why it matters</div>
-      <h2>A vessel is <span class="gold">delayed.</span><br>The whole <span class="gold">plan</span> need to <span class="gold">change.</span></h2>
+      <h2>A vessel is <span class="gold">delayed.</span><br>The whole <span class="gold">plan</span> needs to <span class="gold">change.</span></h2>
       <p class="lead">The scheduler often has only minutes to recover a workable plan across berth availability, vessel line-up, stockpiles, reclaiming or transfer equipment, and throughput targets.</p>
       <div class="section-label">FEASIBLE SCHEDULE INTERDEPENDENCIES</div>
-      <div class="workflow" style="grid-template-columns:repeat(5,1fr);margin-top:28px">
+      <div class="workflow workflow-five" style="margin-top:28px">
         <div class="step"><div class="n">01</div><strong>Berth</strong><span>Can the revised vessel line-up still work?</span></div>
         <div class="step"><div class="n">02</div><strong>Stockpile</strong><span>Will the required material actually be ready?</span></div>
         <div class="step"><div class="n">03</div><strong>Equipment</strong><span>Are reclaiming or transfer resources available?</span></div>
