@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PortOptimiser — Pitch Mode</title>
+<style>
+.team-section{
+  margin-top:28px;
+  padding-top:22px;
+  border-top:1px solid var(--line);
+}
+
+.team-label{
+  color:var(--gold);
+  font-size:13px;
+  letter-spacing:.16em;
+  font-weight:800;
+  margin-bottom:18px;
+}
+
+.team-row{
+  display:grid;
+  grid-template-columns:1fr 1fr 1.15fr;
+  gap:28px;
+  align-items:center;
+}
+
+.team-member{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.team-member img{
+  width:66px;
+  height:66px;
+  border-radius:50%;
+  object-fit:cover;
+  flex-shrink:0;
+}
+
+.team-info{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+
+.team-info strong{
+  font-size:17px;
+}
+
+.team-info span{
+  font-size:12px;
+  color:#aeb5bc;
+  line-height:1.35;
+}
+
+.team-info .team-role{
+  color:var(--gold);
+  font-weight:700;
+}
+
+.team-logos{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:22px;
+}
+
+.team-logos img{
+  object-fit:contain;
+}
+
+.cods-logo{
+  width:245px;
+  max-height:62px;
+}
+
+.curtin-logo{
+  width:160px;
+  max-height:52px;
+}
+.solution-intro{
+  margin:0 0 12px;
+  color:#c7ccd1;
+  font-size:clamp(18px,1.6vw,26px);
+  font-weight:600;
+}
+.section-label{
+  margin-top:26px;
+  color:var(--gold);
+  font-size:13px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-weight:750;
+}
+:root{
+  --bg:#090b0d; --panel:#11151a; --panel2:#151a20; --text:#f6f7f8;
+  --muted:#a9b0b8; --gold:#f5b51b; --line:rgba(255,255,255,.11);
+  --good:#dfe6ea;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;overflow:hidden}
+button,a{font:inherit}
+#app{height:100vh;width:100vw;position:relative}
+.topbar{
+  position:fixed;z-index:20;top:0;left:0;right:0;height:72px;padding:0 4vw;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(180deg,rgba(9,11,13,.96),rgba(9,11,13,.55),transparent);
+}
+.brand{display:flex;align-items:center;gap:14px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#d6d9dc}
+.mark{width:11px;height:28px;background:var(--gold);border-radius:2px}
+.mode{display:flex;gap:8px}
+.pill{border:1px solid var(--line);background:rgba(255,255,255,.04);color:#c9ced3;padding:8px 12px;border-radius:999px;font-size:12px}
+.pill.active{border-color:rgba(245,181,27,.55);color:var(--gold)}
+.slide{
+  position:absolute;inset:0;padding:9vh 6vw 8vh;display:grid;align-content:center;
+  opacity:0;pointer-events:none;transform:translateX(28px);transition:.38s ease;
+}
+.slide.active{opacity:1;pointer-events:auto;transform:none}
+.kicker{color:var(--gold);font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:750;margin-bottom:18px}
+h1{font-size:clamp(46px,6.4vw,96px);line-height:.96;letter-spacing:-.055em;margin:0;max-width:1150px}
+h2{font-size:clamp(34px,4.2vw,66px);line-height:1;letter-spacing:-.045em;margin:0}
+.lead{font-size:clamp(18px,1.75vw,28px);line-height:1.45;color:#c7ccd1;max-width:920px;margin-top:24px}
+.gold{color:var(--gold)}
+.problem-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:5vw;align-items:center}
+.chain{display:grid;gap:10px}
+.node{
+  position:relative;padding:17px 20px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+  border-radius:16px;font-size:clamp(16px,1.5vw,23px);font-weight:650
+}
+.node:not(:last-child):after{content:"↓";position:absolute;bottom:-20px;left:50%;color:var(--gold);z-index:2}
+.bigline{margin-top:34px;font-size:clamp(22px,2.35vw,38px);font-weight:800;max-width:930px}
+.workflow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:34px;align-items:stretch}
+.step{min-height:168px;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--panel);display:flex;flex-direction:column;justify-content:space-between}
+.step .n{font-size:12px;color:var(--gold);letter-spacing:.14em}
+.step strong{font-size:clamp(17px,1.55vw,24px);line-height:1.15}
+.step span{font-size:13px;color:var(--muted);line-height:1.35}
+.step.focus{border-color:rgba(245,181,27,.55);box-shadow:0 0 0 1px rgba(245,181,27,.12) inset}
+.demo-btn{
+  margin-top:26px;display:inline-flex;align-items:center;gap:12px;padding:15px 19px;border-radius:12px;
+  border:1px solid rgba(245,181,27,.55);background:var(--gold);color:#111;font-weight:800;cursor:pointer
+}
+.demo-btn.secondary{background:transparent;color:var(--gold)}
+.demo-shell{display:none;position:absolute;inset:72px 0 0;background:#050607;z-index:15}
+.demo-shell.active{display:block}
+.demo-head{height:54px;padding:0 4vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:#0b0d10}
+.demo-frame{width:100%;height:calc(100% - 54px);border:0;background:white}
+.back{background:transparent;border:1px solid var(--line);color:#e9ecef;padding:9px 13px;border-radius:10px;cursor:pointer}
+.demo-note{font-size:12px;color:#9fa6ad}.demo-note b{color:var(--gold)}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+.card{min-height:240px;padding:26px;border-radius:20px;background:linear-gradient(145deg,var(--panel2),#0e1115);border:1px solid var(--line)}
+.card .num{font-size:13px;color:var(--gold);letter-spacing:.14em;margin-bottom:40px}
+.card h3{font-size:clamp(25px,2.2vw,38px);margin:0 0 14px}
+.card p{color:#b7bdc3;font-size:clamp(15px,1.25vw,19px);line-height:1.45;margin:0}
+.deliver{margin-top:20px;padding:16px 20px;border-top:1px solid var(--line);color:#d9dde1;font-size:clamp(14px,1.2vw,18px)}
+.partner-top{padding:24px 28px;border:1px solid rgba(245,181,27,.38);border-radius:18px;background:linear-gradient(110deg,rgba(245,181,27,.08),rgba(255,255,255,.02));margin:28px 0 20px}
+.partner-top .tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+.tag{padding:8px 11px;border:1px solid var(--line);border-radius:999px;color:#c8cdd2;font-size:13px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.col{padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--panel)}
+.col h3{margin:0 0 15px;color:var(--gold);font-size:14px;letter-spacing:.14em}
+.item{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:clamp(15px,1.25vw,19px)}
+.item:last-child{border-bottom:0}
+.cta{font-size:clamp(25px,2.5vw,42px);font-weight:850;margin-top:24px;letter-spacing:-.025em}
+.nav{position:fixed;z-index:25;left:4vw;right:4vw;bottom:24px;display:flex;justify-content:space-between;align-items:center}
+.dots{display:flex;gap:8px}
+.dot{width:28px;height:4px;border-radius:99px;background:#3b4147}.dot.active{background:var(--gold)}
+.controls{display:flex;gap:8px}
+.ctrl{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(17,21,26,.82);color:white;cursor:pointer;font-size:18px}
+.hint{font-size:12px;color:#777f87;margin-left:10px}
+@media(max-width:900px){
+  .problem-grid,.cols{grid-template-columns:1fr}.chain{display:none}.workflow{grid-template-columns:1fr 1fr}.step{min-height:130px}
+  .cards3{grid-template-columns:1fr}.card{min-height:auto}.slide{overflow:auto;padding-top:100px;padding-bottom:100px}.topbar{height:64px}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="topbar">
+    <div class="brand"><span class="mark"></span><span>CURTIN UNIVERSITY EMCR &nbsp;|&nbsp; PITCH TO PARTNER</span></div>
+    <!-- <div class="mode"><span class="pill active">PITCH MODE</span><span class="pill">HUMAN-IN-THE-LOOP</span></div> -->
+  </div>
+
+  <section class="slide active" data-i="0">
+    <div>
+      <div class="kicker">01 — The problem & why it matters</div>
+      <h2>A vessel is <span class="gold">delayed.</span><br>The whole <span class="gold">plan</span> need to <span class="gold">change.</span></h2>
+      <p class="lead">The scheduler often has only minutes to recover a workable plan across berth availability, vessel line-up, stockpiles, reclaiming or transfer equipment, and throughput targets.</p>
+      <div class="section-label">FEASIBLE SCHEDULE INTERDEPENDENCIES</div>
+      <div class="workflow" style="grid-template-columns:repeat(5,1fr);margin-top:28px">
+        <div class="step"><div class="n">01</div><strong>Berth</strong><span>Can the revised vessel line-up still work?</span></div>
+        <div class="step"><div class="n">02</div><strong>Stockpile</strong><span>Will the required material actually be ready?</span></div>
+        <div class="step"><div class="n">03</div><strong>Equipment</strong><span>Are reclaiming or transfer resources available?</span></div>
+        <div class="step"><div class="n">04</div><strong>Material flow</strong><span>Can product reach the vessel when required?</span></div>
+        <div class="step"><div class="n">05</div><strong>Downstream</strong><span>Does the recovery create another conflict or congestion?</span></div>
+      </div>
+      <div class="partner-top" style="margin-top:20px">
+        <b style="color:var(--gold)">WHY THIS MATTERS</b>
+        <div style="font-size:clamp(17px,1.55vw,24px);font-weight:700;margin-top:8px">A plan can look acceptable on the berth chart and still fail operationally.</div>
+        <div style="color:#b7bdc3;margin-top:7px">A decision-support tool can quickly test feasible recovery alternatives before a decision is locked in.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-i="1">
+    <div>
+      <div class="kicker">02 — PortOptimiser</div>
+      <!-- <h2>Turn operational context into <span class="gold">optimal recovery options.</span></h2> -->
+      <p class="solution-intro">That's what we're developing with PortOptimiser.</p>
+      <h2>
+        Turn operational context into
+        <span class="gold">optimal recovery options.</span>
+      </h2>
+      <p class="lead" style="margin-top:16px">PortOptimiser connects operational data with scheduler and SME knowledge. Plain operational context is translated into structured optimisation inputs, then alternatives are compared against agreed KPIs.</p>
+      <div class="section-label">Workflow</div>
+      
+      <div class="workflow">
+      <div class="step">
+        <div class="n">01</div>
+        <strong>Disruption: Vessel delay</strong>
+        <span>A vessel arrives later than planned, triggering schedule recovery.</span>
+      </div>
+        <div class="step"><div class="n">02</div><strong>Operational context</strong><span>Operational data + scheduler and SME knowledge.</span></div>
+        <div class="step focus"><div class="n">03</div><strong>PortOptimiser</strong><span>Capture context → structure inputs → optimise recovery.</span></div>
+        <div class="step"><div class="n">04</div><strong>Recovery options</strong><span>Optimal alternatives compared across agreed KPIs.</span></div>
+        <div class="step"><div class="n">05</div><strong>Scheduler decides</strong><span>Review the alternatives and select the preferred recovery plan.</span></div>
+      </div>
+      <button class="demo-btn" id="openDemo">See it in action <span>↗</span></button>
+      <!-- <span class="hint">Live concept demo opens inside Pitch Mode</span> -->
+    </div>
+  </section>
+
+  <section class="slide" data-i="2">
+    <div>
+      <div class="kicker">03 — The proof-of-concept</div>
+      <h2>One realistic vessel-delay scenario. <br><span class="gold">One partner terminal.</span></h2>
+      <p class="lead" style="margin-top:16px">Together with a partner, the POC will test whether PortOptimiser is realistic, fast enough for time-critical decisions, and operationally valuable compared with current practice.</p>
+      <div class="section-label">Validation criteria</div>
+      
+<div class="cards3">
+  <div class="card">
+    <div class="num">01 — REALISTIC</div>
+    <h3>Fit the operation</h3>
+    <p>Use the terminal's real berths, stockpiles, equipment, material flows, and operating rules.</p>
+  </div>
+
+  <div class="card">
+    <div class="num">02 — FAST</div>
+    <h3>Support quick decisions</h3>
+    <p>Generate useful recovery options within the scheduler's decision window.</p>
+  </div>
+
+  <div class="card">
+    <div class="num">03 — VALUABLE</div>
+    <h3>Show operational value</h3>
+    <p>Compare recovery options against agreed KPIs and current practice.</p>
+  </div>
+</div>
+      <div class="deliver"><b>POC outcome:</b> Real partner scenario → working decision-support demo → recovery options → measurable KPI comparison</div>
+    </div>
+  </section>
+
+<section class="slide" data-i="3">
+  <div>
+    <div class="kicker">04 — PARTNERSHIP</div>
+
+    <h2>
+      What we bring. <span class="gold">What we need from you.</span>
+    </h2>
+
+    <div class="cols" style="margin-top:30px">
+      <div class="col">
+        <h3>WHAT WE BRING</h3>
+        <div class="item"><b>5+ years</b> in applied mathematics & optimisation</div>
+        <div class="item">Decision-support methods & software development</div>
+        <div class="item">Industry experience: <b>BHP • Fortescue • Hancock Iron Ore</b></div>
+        <!-- <div class="item">A working PortOptimiser POC configured to your scenario</div> -->
+      </div>
+
+      <div class="col">
+        <h3>WHAT WE NEED FROM YOU</h3>
+        <div class="item"><b>1</b> representative vessel-delay scenario</div>
+        <div class="item">Relevant operational & scheduling data</div>
+        <div class="item">Access to <b>SMEs</b> for a few short working sessions</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="team-section">
+  <div class="team-label">THE TEAM</div>
+
+  <div class="team-row">
+
+    <div class="team-member">
+      <img src="images/ponpot.png" alt="Dr Ponpot Jartnillaphand">
+      <div class="team-info">
+        <strong>Dr Ponpot Jartnillaphand</strong>
+        <span class="team-role">Project Lead</span>
+        <span>Research Associate</span>
+        <!-- <span>Curtin Centre for Optimisation and Decision Science</span> -->
+      </div>
+    </div>
+
+    <div class="team-member">
+      <img src="images/hoa.png" alt="Dr Hoa Bui">
+      <div class="team-info">
+        <strong>Dr Hoa Bui</strong>
+        <span class="team-role">Project Investigator</span>
+        <span>Senior Lecturer</span>
+        <!-- <span>Curtin Centre for Optimisation and Decision Science</span> -->
+      </div>
+    </div>
+
+    <div class="team-logos">
+      <img class="cods-logo" src="images/cods-logo.png"
+           alt="Centre for Optimisation and Decision Science">
+      <img class="curtin-logo" src="images/curtin-logo.png"
+           alt="Curtin University">
+    </div>
+
+  </div>
+      <div class="cta">
+      Have a scenario we could test?
+      <span class="gold">Let's test it.</span>
+    </div>
+</div>
+
+</section>
+
+  <div class="demo-shell" id="demoShell">
+    <div class="demo-head">
+      <button class="back" id="closeDemo">← Return to pitch</button>
+      <div class="demo-note"><b>INTERACTIVE CONCEPT DEMO</b> — not the completed POC</div>
+      <button class="back" id="continuePitch">Continue pitch →</button>
+    </div>
+    <iframe class="demo-frame" src="https://ponpotcurtin.github.io/portoptimiser-demo/" title="PortOptimiser concept demo"></iframe>
+  </div>
+
+  <div class="nav" id="nav">
+    <div class="dots">
+      <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    </div>
+    <div class="controls"><span class="hint"></span><button class="ctrl" id="prev">←</button><button class="ctrl" id="next">→</button></div>
+  </div>
+</div>
+<script>
+const slides=[...document.querySelectorAll('.slide')], dots=[...document.querySelectorAll('.dot')];
+let i=0;
+function show(n){
+  i=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+  dots.forEach((d,k)=>d.classList.toggle('active',k===i));
+}
+document.getElementById('prev').onclick=()=>show(i-1);
+document.getElementById('next').onclick=()=>show(i+1);
+const shell=document.getElementById('demoShell');
+document.getElementById('openDemo').onclick=()=>shell.classList.add('active');
+document.getElementById('closeDemo').onclick=()=>shell.classList.remove('active');
+document.getElementById('continuePitch').onclick=()=>{shell.classList.remove('active');show(2)};
+document.addEventListener('keydown',e=>{
+  if(shell.classList.contains('active')){
+    if(e.key==='Escape') shell.classList.remove('active');
+    return;
+  }
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ') show(i+1);
+  if(e.key==='ArrowLeft'||e.key==='PageUp') show(i-1);
+});
+</script>
+</body>
+</html>
